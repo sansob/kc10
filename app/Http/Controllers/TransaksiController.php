@@ -23,6 +23,8 @@ class TransaksiController extends Controller
         $koperasi = KoperasiDetail::find($kid);
         return view('transaksi/lihattransaksi')
             ->with('data', $data)
+            ->with('kid', $kid)
+            ->with('id', $id)
             ->with('koperasi', $koperasi);
     }
 
@@ -32,25 +34,25 @@ class TransaksiController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getTransaksiSimpan($id)
-    {
-        $auth = Auth::user()->id;
-        $nasbah = Transaksi::select(['id', 'nama_transaksi', 'koperasi_id', 'tipe', 'nominal', 'created_at', 'nasabah_id'])
-            ->where('koperasi_id', '=', $auth)
-            ->where('tipe', '=', 'simpanan')
-            ->where('nasabah_id', '=', $id);
-
-        try {
-            return Datatables::of($nasbah)
-                ->addColumn('action', function ($nasbah) {
-                    return '<a href="trans/' . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="voyager-search"></i> Lihat Transaksi</a>
-     <a href="#edit-' . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
-                })
-                ->make(true);
-        } catch (\Exception $e) {
-            echo $e;
-        }
-    }
+//    public function getTransaksiSimpan($id)
+//    {
+//        $auth = Auth::user()->id;
+//        $nasbah = Transaksi::select(['id', 'nama_transaksi', 'koperasi_id', 'tipe', 'nominal', 'created_at', 'status_pinjaman', 'nasabah_id'])
+//            ->where('koperasi_id', '=', $auth)
+//            ->where('tipe', '=', 'simpanan');
+//        //->where('nasabah_id', '=', $id);
+//
+//        try {
+//            return Datatables::of($nasbah)
+//                ->addColumn('action', function ($nasbah) {
+//                    return '<a href="trans/' . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="voyager-search"></i> Lihat Transaksi</a>
+//     <a href="#edit-' . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+//                })
+//                ->make(true);
+//        } catch (\Exception $e) {
+//            echo $e;
+//        }
+//    }
 
     /**
      * @param $kid
@@ -60,7 +62,7 @@ class TransaksiController extends Controller
     public function getTransaksiPinjam($id, $kid)
     {
         $auth = Auth::user()->id;
-        $pinjam = Transaksi::select(['id', 'nama_transaksi', 'tipe', 'nominal', 'created_at', 'nasabah_id'])
+        $pinjam = Transaksi::select(['id', 'nama_transaksi', 'tipe', 'nominal', 'created_at', 'nasabah_id', 'status_pinjaman'])
             ->where('nasabah_id', '=', $kid)
             ->where('koperasi_id', '=', $id)
             ->where('tipe', '=', 'pinjaman');
@@ -68,19 +70,21 @@ class TransaksiController extends Controller
 
         try {
             return Datatables::of($pinjam)
-                ->addColumn('action', function ($pinjam) {
-                    return '<a href="trans/' . $pinjam->id . '" class="btn btn-xs btn-primary"><i class="voyager-search"></i> Lihat Transaksi</a>
-     <a href="#edit-' . $pinjam->id . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
-                })
+//                ->addColumn('action', function ($pinjam) {
+//                    return '
+//     <a href="/admin/trans/delete/' . $pinjam->id . '" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+//                })
                 ->make(true);
         } catch (\Exception $e) {
             echo $e;
         }
     }
 
-    public function create()
+    public function create($kid, $id)
     {
-        //
+        return view('transaksi/addtransaksi')
+            ->with('kid', $kid)
+            ->with('id', $id);
     }
 
     /**
@@ -91,12 +95,22 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $req = new Transaksi();
+        $req->koperasi_id = $request['koperasi_id'];
+        $req->nasabah_id = $request['nasabah_id'];
+        $req->tipe = "pinjaman";
+        $req->nama_transaksi = $request['nama_transaksi'];
+        $req->nominal = $request['nominal'];
+        $req->status_pinjaman = $request['status_pinjaman'];
+        $req->save();
+        return redirect(url('admin/trans/') . "/" . $req->koperasi_id . "/" . $req->nasabah_id);
     }
+
+
 
     /**
      * Display the specified resource.
-     *
+     *s
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
@@ -134,8 +148,10 @@ class TransaksiController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $nid, $kid)
     {
-        //
+        $del = Transaksi::find($id);
+        $del->delete;
+        return redirect(url('admin/trans/') . "/" . $kid . "/" . $nid);
     }
 }

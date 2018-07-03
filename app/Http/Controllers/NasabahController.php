@@ -20,6 +20,9 @@ class NasabahController extends Controller
         return view('nasabah/viewnasabah');
     }
 
+    /**
+     * @return mixed
+     */
     public function dataNasabah()
     {
         $auth = Auth::user()->id;
@@ -29,8 +32,8 @@ class NasabahController extends Controller
         try {
             return Datatables::of($nasbah)
                 ->addColumn('action', function ($nasbah) {
-                    return '<a href="trans/' . $nasbah->id_koperasi . "/" . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="voyager-search"></i> Lihat Transaksi</a>
-     <a href="#edit-' . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>';
+                    return '<a href="/admin/trans/' . $nasbah->id_koperasi . "/" . $nasbah->id . '" class="btn btn-xs btn-primary"><i class="voyager-search"></i> Lihat Transaksi</a>
+     ';
                 })
                 ->make(true);
         } catch (\Exception $e) {
@@ -65,6 +68,10 @@ class NasabahController extends Controller
         $req->alamat = $request['alamat'];
         $req->perkerjaan = $request['perkerjaan'];
         $req->id_koperasi = $request['id_koperasi'];
+        $req->nama_pinjaman = $request['nama_pinjaman'];
+        $req->jumlah_pinjaman = $request['jumlah_pinjaman'];
+        $req->jatuh_tempo = $request['jatuh_tempo'];
+        $req->cicilan_bulanan = $request['cicilan_bulanan'];
         $req->save();
         return redirect(route('nasabah.create'));
 

@@ -5,11 +5,9 @@
 
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="voyager-window-list"></i> Lihat Detail User
+            <i class="voyager-window-list"></i> Lihat Nasabah {{ $data->nama }}
         </h1>
-        <a href="{{route('nasabah.create')}}" class="btn btn-success btn-add-new">
-            <i class="voyager-plus"></i> <span>Add New</span>
-        </a>
+
 
         <div class="page-content edit-add container-fluid">
             <div class="row">
@@ -82,14 +80,25 @@
                     </div>
                     <br>
 
+                    <h1 class="page-title">
+                        <i class="voyager-window-list"></i> Histori Transaksi
+                    </h1>
+
+                    <a href="{{url('admin/trans/create/')}}/{{$kid}}/{{{$id}}}" class="btn btn-success btn-add-new">
+                        <i class="voyager-plus"></i> <span>Tambah Histori</span>
+                    </a>
+                    <br>
                     <div class="panel panel-bordered">
+
+                        <br>
                         <table class="table table-bordered" id="nasabah-table">
                             <thead>
                             <tr>
                                 <th>Nama</th>
                                 <th>Nominal</th>
+                                <th>Status</th>
+
                                 <th>Dibuat</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                         </table>
@@ -118,9 +127,9 @@
             columns: [
                 {data: 'nama_transaksi', name: 'nama_transaksi'},
                 {data: 'nominal', name: 'nominal'},
+                {data: 'status_pinjaman', name: 'status_pinjaman'},
                 {data: 'created_at', name: 'created_at'},
 
-                {data: 'action', name: 'action', orderable: false, searchable: false}
             ],
             destroy: true,
         });

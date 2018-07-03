@@ -91,6 +91,38 @@
                                 </div>
                                 <!-- GET THE DISPLAY OPTIONS -->
 
+                                <div class="form-group  col-md-12">
+
+                                    <label for="name">Nama Pinjaman</label>
+                                    <input type="text" class="form-control" name="nama_pinjaman" placeholder="Nama Pinjaman" value="">
+
+
+                                </div>
+
+                                <div class="form-group  col-md-12">
+
+                                    <label for="name">Jumlah Pinjaman</label>
+                                    <input type="number" class="form-control" name="jumlah_pinjaman" step="any" placeholder="Jumlah Pinjaman" value="">
+
+
+                                </div>
+
+                                <div class="form-group  col-md-12">
+
+                                    <label for="name">Jatuh Tempo</label>
+                                    <input type="date" class="form-control" name="jatuh_tempo" placeholder="Jatuh Tempo" value="">
+
+
+                                </div>
+
+                                <div class="form-group  col-md-12">
+
+                                    <label for="name">Cicilan Bulanan</label>
+                                    <input type="number" class="form-control" name="cicilan_bulanan" step="any" placeholder="Cicilan Bulanan" value="">
+
+
+                                </div>
+
 
                             </div><!-- panel-body -->
 

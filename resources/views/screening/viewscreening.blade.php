@@ -5,10 +5,10 @@
 
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="voyager-window-list"></i> Data Nasabah
+            <i class="voyager-window-list"></i> Screening Checking Form Request
         </h1>
-        <a href="{{route('nasabah.create')}}" class="btn btn-success btn-add-new">
-            <i class="voyager-plus"></i> <span>Add New</span>
+        <a href="{{route('screening.create')}}" class="btn btn-success btn-add-new">
+            <i class="voyager-plus"></i> <span>Request New</span>
         </a>
 
         <div class="page-content edit-add container-fluid">
@@ -23,8 +23,7 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>NIK</th>
-                                <th>Nomor Rekening</th>
-                                <th>Pekerjaan</th>
+                                <th>Status</th>
                                 <th>Dibuat</th>
                                 <th>Action</th>
                             </tr>
@@ -51,12 +50,11 @@
             paging: true,
             searching: true,
 
-            ajax: '{!! route('nasabah.dataNasabah') !!}',
+            ajax: '{!! route('screening.dataScreening') !!}',
             columns: [
                 {data: 'nama', name: 'nama'},
                 {data: 'nik', name: 'nik'},
-                {data: 'no_rek', name: 'no_rek'},
-                {data: 'perkerjaan', name: 'perkerjaan'},
+                {data: 'status', name: 'status'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ],

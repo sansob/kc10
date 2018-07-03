@@ -25,7 +25,17 @@ Route::group(['prefix' => 'admin'], function () {
     //datatable
     Route::get('nasabah/dataNasabah', 'NasabahController@dataNasabah')->middleware('admin.user')->name('nasabah.dataNasabah');
     Route::get('trans/{kid}/{id}', 'TransaksiController@index2')->middleware('admin.user')->name('transaksi.index');
+    Route::get('trans/create/{kid}/{id}', 'TransaksiController@create')->middleware('admin.user')->name('transaksi.create');
+    Route::post('trans/add/{kid}/{id}', 'TransaksiController@store')->middleware('admin.user')->name('transaksi.store');
+    Route::get('trans/delete/{kid}/{id}', 'TransaksiController@destroy')->middleware('admin.user')->name('transaksi.destroy');
     Route::get('trans/getTransaksiSimpan/{id}', 'TransaksiController@getTransaksiSimpan')->middleware('admin.user')->name('transaksi.getTransaksiSimpan');
     Route::get('trans/getTransaksiPinjam/{kid}/{id}', 'TransaksiController@getTransaksiPinjam')->middleware('admin.user')->name('transaksi.getTransaksiPinjam');
+
+    Route::get('checking', 'ScreeningController@index')->middleware('admin.user')->name('screening.index');
+    Route::get('checking/create', 'ScreeningController@create')->middleware('admin.user')->name('screening.create');
+    Route::post('checking/add', 'ScreeningController@store')->middleware('admin.user')->name('screening.store');
+    Route::get('checking/dataScreening', 'ScreeningController@dataScreening')->middleware('admin.user')->name('screening.dataScreening');
+    Route::get('checking/dataNasabahScreening/{nik}', 'ScreeningController@dataNasabahScreening')->middleware('admin.user')->name('screening.dataNasabahScreening');
+    Route::get('checking/show/{id}', 'ScreeningController@show')->middleware('admin.user')->name('screening.show');
 
 });
